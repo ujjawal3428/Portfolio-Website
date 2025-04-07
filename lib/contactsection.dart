@@ -12,7 +12,7 @@ class ContactSection extends StatelessWidget {
         children: [
           Text(
             "Contact Me",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           SizedBox(height: 20),
           TextField(

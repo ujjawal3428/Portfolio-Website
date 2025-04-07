@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:porfolio/contactsection.dart';
 import 'package:porfolio/herosection.dart';
 import 'package:porfolio/projectsection.dart';
@@ -20,7 +21,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     if (context != null) {
       Scrollable.ensureVisible(
         context,
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 800),  // Slightly longer for a smoother effect
         curve: Curves.easeInOut,
       );
     }
@@ -29,10 +30,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,  // Allow background to extend behind the app bar
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("My Portfolio", style: TextStyle(color: Colors.black)),
+        title: Text(
+          "My Portfolio",
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -44,7 +53,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   curve: Curves.easeInOut,
                 );
               },
-              child: Text("Home", style: TextStyle(color: Colors.black)),
+              child: Text(
+                "Home",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
           ),
           Padding(
@@ -53,7 +65,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
               onPressed: () {
                 _scrollToSection(_projectsKey);
               },
-              child: Text("Projects", style: TextStyle(color: Colors.black)),
+              child: Text(
+                "Projects",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
           ),
           Padding(
@@ -62,7 +77,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
               onPressed: () {
                 _scrollToSection(_contactKey);
               },
-              child: Text("Contact", style: TextStyle(color: Colors.black)),
+              child: Text(
+                "Contact",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
           ),
         ],
@@ -74,19 +92,43 @@ class _PortfolioPageState extends State<PortfolioPage> {
             // Hero Section
             HeroSection(),
 
-            Container(
-              key: _projectsKey, 
-              child: ProjectsSection(),
+            // Project Section
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Container(
+                key: _projectsKey,
+                margin: const EdgeInsets.symmetric(vertical: 40),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blueAccent, Colors.purpleAccent],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ProjectsSection(),
+              ),
             ),
 
-            
-            Container(
-              key: _contactKey,
-              child: ContactSection(),
+            // Contact Section
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Container(
+                key: _contactKey,
+                margin: const EdgeInsets.symmetric(vertical: 40),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha : 0.8),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ContactSection(),
+              ),
             ),
           ],
         ),
       ),
+      backgroundColor: Colors.black87,  // Set background to a dark color
     );
   }
 }

@@ -9,59 +9,88 @@ class HeroSection extends StatelessWidget {
       height: 500,
       width: double.infinity,
       decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blueAccent.withOpacity(0.7), Colors.purple.withOpacity(0.7)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         image: DecorationImage(
           image: NetworkImage(
             'https://cdn.pixabay.com/photo/2016/03/27/18/54/technology-1283624_1280.jpg',
           ),
           fit: BoxFit.cover,
           alignment: Alignment.center,
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
         ),
       ),
-      child: Container(
-        color: Colors.black.withValues(alpha : 0.9), // To improve text visibility
-        child: Center(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "Hi, I'm Ujjawal Jadhav",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "Front-end App Developer",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Add your action here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orangeAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  elevation: 5,
-                ),
-                child: const Text(
-                  "Get in Touch",
+              AnimatedOpacity(
+                opacity: 1.0,
+                duration: Duration(milliseconds: 800),
+                child: Text(
+                  "Hi, I'm Ujjawal Jadhav",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 42,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 3,
+                    fontFamily: 'RobotoMono',
+                    shadows: [
+                      Shadow(color: Colors.black.withOpacity(0.7), offset: Offset(0, 4), blurRadius: 8)
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              AnimatedOpacity(
+                opacity: 1.0,
+                duration: Duration(milliseconds: 800),
+                child: Text(
+                  "Front-end App Developer",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'RobotoMono',
+                    letterSpacing: 1.5,
+                    shadows: [
+                      Shadow(color: Colors.black.withValues(alpha : 0.7), offset: Offset(0, 4), blurRadius: 6)
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25),
+              AnimatedOpacity(
+                opacity: 1.0,
+                duration: Duration(milliseconds: 1200),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Action for the button
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.deepOrangeAccent,
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    elevation: 10,
+                    shadowColor: Colors.deepOrangeAccent.withValues(alpha : 0.6),
+                  ),
+                  child: Text(
+                    "Get in Touch",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
+                    ),
                   ),
                 ),
               ),
