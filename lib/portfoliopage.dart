@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:porfolio/contactsection.dart';
@@ -21,7 +23,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     if (context != null) {
       Scrollable.ensureVisible(
         context,
-        duration: Duration(milliseconds: 800),  // Slightly longer for a smoother effect
+        duration: const Duration(milliseconds: 800),
         curve: Curves.easeInOut,
       );
     }
@@ -30,9 +32,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,  // Allow background to extend behind the app bar
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(70, 0, 0, 0),
         elevation: 0,
         title: Text(
           "My Portfolio",
@@ -43,92 +45,77 @@ class _PortfolioPageState extends State<PortfolioPage> {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextButton(
-              onPressed: () {
-                _scrollController.animateTo(
-                  0,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                );
-              },
-              child: Text(
-                "Home",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextButton(
-              onPressed: () {
-                _scrollToSection(_projectsKey);
-              },
-              child: Text(
-                "Projects",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextButton(
-              onPressed: () {
-                _scrollToSection(_contactKey);
-              },
-              child: Text(
-                "Contact",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ),
+          _navButton("Home", () {
+            _scrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          }),
+          _navButton("Projects", () {
+            _scrollToSection(_projectsKey);
+          }),
+          _navButton("Contact", () {
+            _scrollToSection(_contactKey);
+          }),
         ],
       ),
-      body: SingleChildScrollView(
-        controller: _scrollController, // Added the controller here
-        child: Column(
-          children: [
-            // Hero Section
-            HeroSection(),
-
-            // Project Section
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20),
-              child: Container(
-                key: _projectsKey,
-                margin: const EdgeInsets.symmetric(vertical: 40),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blueAccent, Colors.purpleAccent],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque, // Makes sure taps are registered
+        onTap: () => FocusScope.of(context).unfocus(), // Dismiss keyboard on tap
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              HeroSection(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  key: _projectsKey,
+                  margin: const EdgeInsets.symmetric(vertical: 40),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Colors.blueAccent, Colors.purpleAccent],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  borderRadius: BorderRadius.circular(15),
+                  child: ProjectsSection(),
                 ),
-                child: ProjectsSection(),
               ),
-            ),
-
-            // Contact Section
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20),
-              child: Container(
-                key: _contactKey,
-                margin: const EdgeInsets.symmetric(vertical: 40),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha : 0.8),
-                  borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  key: _contactKey,
+                  margin: const EdgeInsets.symmetric(vertical: 40),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const ContactSection(),
                 ),
-                child: ContactSection(),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      backgroundColor: Colors.black87,  // Set background to a dark color
+      backgroundColor: Colors.black87,
+    );
+  }
+
+  Widget _navButton(String label, VoidCallback onPressed) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          label,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,64 @@
 import 'package:flutter/material.dart';
 
-class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
+class HeroSection extends StatefulWidget {
+  const HeroSection({super.key,});
+
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _HeroSectionState createState() => _HeroSectionState();
+}
+
+class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin {
+    
+  late AnimationController _headingController;
+  late Animation<Offset> _headingOffsetAnimation;
+  late AnimationController _buttonController;
+  late Animation<double> _buttonScaleAnimation;
+
+  
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Heading Animation
+    _headingController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    _headingOffsetAnimation = Tween<Offset>(
+      begin: const Offset(0, -0.5),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _headingController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Button Animation
+    _buttonController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _buttonScaleAnimation = Tween<double>(
+      begin: 0.8,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _buttonController,
+      curve: Curves.elasticOut,
+    ));
+
+    // Trigger animations
+    _headingController.forward();
+    _buttonController.forward();
+  }
+
+  @override
+  void dispose() {
+    _headingController.dispose();
+    _buttonController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,17 +67,12 @@ class HeroSection extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.blueAccent.withOpacity(0.7), Colors.purple.withOpacity(0.7)],
+          colors: [
+             Color.fromARGB(255, 4, 37, 94),
+                  Color.fromARGB(255, 66, 4, 77)
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-        ),
-        image: DecorationImage(
-          image: NetworkImage(
-            'https://cdn.pixabay.com/photo/2016/03/27/18/54/technology-1283624_1280.jpg',
-          ),
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
         ),
       ),
       child: Center(
@@ -30,69 +82,64 @@ class HeroSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AnimatedOpacity(
-                opacity: 1.0,
-                duration: Duration(milliseconds: 800),
+              SlideTransition(
+                position: _headingOffsetAnimation,
                 child: Text(
                   "Hi, I'm Ujjawal Jadhav",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 42,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 3,
                     fontFamily: 'RobotoMono',
                     shadows: [
-                      Shadow(color: Colors.black.withOpacity(0.7), offset: Offset(0, 4), blurRadius: 8)
+                      Shadow(
+                        color: Colors.black54,
+                        offset: Offset(0, 4),
+                        blurRadius: 8,
+                      )
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 15),
-              AnimatedOpacity(
-                opacity: 1.0,
-                duration: Duration(milliseconds: 800),
-                child: Text(
-                  "Front-end App Developer",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'RobotoMono',
-                    letterSpacing: 1.5,
-                    shadows: [
-                      Shadow(color: Colors.black.withValues(alpha : 0.7), offset: Offset(0, 4), blurRadius: 6)
-                    ],
-                  ),
+              const Text(
+                "Front-end App Developer",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'RobotoMono',
+                  letterSpacing: 1.5,
                 ),
               ),
               const SizedBox(height: 25),
-              AnimatedOpacity(
-                opacity: 1.0,
-                duration: Duration(milliseconds: 1200),
+              ScaleTransition(
+                scale: _buttonScaleAnimation,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Action for the button
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepOrangeAccent,
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    elevation: 10,
-                    shadowColor: Colors.deepOrangeAccent.withValues(alpha : 0.6),
-                  ),
-                  child: Text(
-                    "Get in Touch",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                ),
+  onPressed: () {
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: const Color.fromARGB(255, 0, 140, 255),
+    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(50),
+    ),
+    elevation: 10,
+  ),
+  child: const Text(
+    "Get in Touch",
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 2,
+    ),
+  ),
+)
+
               ),
             ],
           ),

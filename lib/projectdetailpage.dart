@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import for URL launching
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailsPage extends StatelessWidget {
   final String projectTitle;
   final String projectDescription;
   final List<String> imageUrls;
   final String codeSnippet;
-  final String githubLink; // GitHub link to redirect
+  final String githubLink;
 
   const ProjectDetailsPage({
     super.key,
@@ -19,23 +18,25 @@ class ProjectDetailsPage extends StatelessWidget {
     required this.githubLink,
   });
 
-  // Corrected function to launch GitHub URL
-  void _launchURL() async {
-    final Uri url = Uri.parse(githubLink); // Proper URI parsing
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $githubLink';
+  Future<void> _launchURL() async {
+    try {
+      final Uri url = Uri.parse(githubLink);
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        debugPrint('Could not launch $url');
+      }
+    } catch (e) {
+      debugPrint('Error launching URL: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(projectTitle),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.deepPurple,
+        elevation: 4,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -45,71 +46,91 @@ class ProjectDetailsPage extends StatelessWidget {
             Text(
               projectTitle,
               style: const TextStyle(
-                fontSize: 28,
+                fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Colors.deepPurple,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               projectDescription,
-              style: const TextStyle(fontSize: 16, color: Colors.black54),
+              style: const TextStyle(fontSize: 18, color: Colors.black87),
             ),
             const SizedBox(height: 16),
-            CarouselSlider(
-              items: imageUrls.map((url) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    url,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                );
-              }).toList(),
-              options: CarouselOptions(
-                height: 300,
-                enlargeCenterPage: true,
-                enableInfiniteScroll: true,
-                autoPlay: true,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: Container(
-                width: 1000,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+            // Image Grid - Only show if imageUrls is not empty and images exist
+            if (imageUrls.isNotEmpty) ...[
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 1.2,
+                ),
+                itemCount: imageUrls.length,
+                itemBuilder: (context, index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                      imageUrls[index],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[300],
+                          child: const Center(
+                            child: Icon(Icons.broken_image, size: 40),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
-                child: SyntaxView(
-                  code: codeSnippet,
-                  syntax: Syntax.DART,
-                  syntaxTheme: SyntaxTheme.dracula(),
-                  withZoom: true,
-                  withLinesCount: true,
-                ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+            // Code display section
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: SyntaxView(
+                code: codeSnippet,
+                syntax: Syntax.DART,
+                syntaxTheme: SyntaxTheme.dracula(),
+                withZoom: true,
+                withLinesCount: true,
+                expanded: true,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: _launchURL,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  backgroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 5,
                 ),
                 child: const Text(
                   "View Source Code",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
