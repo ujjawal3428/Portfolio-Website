@@ -9,8 +9,12 @@ class ProjectsSection extends StatelessWidget {
   final List<Map<String, dynamic>> projects = [
     {
       'title': 'Portfolio Website',
-      'description': 'A responsive website to showcase my projects and skills.',
-      'image': 'assets/images/a1.jpg',
+      'description': 'This is my digital home—a sleek, responsive portfolio where I showcase the projects Im proud of (including this very site!). It’s got smooth scrolling, clean design, and a user-friendly layout that reflects my style and skills. Built with love using [your tech stack], its not just a portfolio—its a project in itself',
+      'images': [
+        'assets/images/a1.jpg',
+        'assets/images/t1.jpg',
+        'assets/images/t2.jpg',
+      ],
       'code': '''
 import 'package:flutter/material.dart';
 
@@ -30,12 +34,16 @@ class MyApp extends StatelessWidget {
   }
 }
 ''',
-      'detailPageType': 0, // Use numeric index instead of class reference
+      'detailPageType': 0,
     },
     {
       'title': 'E-commerce App',
       'description': 'A mobile app for buying and selling products online.',
-      'image': 'assets/images/t1.jpg',
+      'images': [
+        'assets/images/t1.jpg',
+        'assets/images/ecommerce2.jpg',
+        'assets/images/ecommerce3.jpg',
+      ],
       'code': '''
 import 'package:flutter/material.dart';
 
@@ -60,7 +68,11 @@ class EcommerceApp extends StatelessWidget {
     {
       'title': 'New Project',
       'description': 'Description for the new project.',
-      'image': 'assets/images/t2.jpg',
+      'images': [
+        'assets/images/t2.jpg',
+        'assets/images/newproj2.jpg',
+        'assets/images/newproj3.jpg',
+      ],
       'code': '''
 import 'package:flutter/material.dart';
 
@@ -84,28 +96,18 @@ class NewProjectApp extends StatelessWidget {
     },
   ];
 
-  // Default images to use for all projects
-  final List<String> defaultImages = [
-    'assets/images/t1.jpeg',
-    'assets/images/t2.jpeg',
-    'assets/images/t3.jpg',
-    'assets/images/t4.jpg',
-    'assets/images/t5.png',
-  ];
-
   void _navigateToProjectDetailPage(BuildContext context, int index) {
     final project = projects[index];
     final int detailPageType = project['detailPageType'] as int;
-    
+    final List<String> imageUrls = List<String>.from(project['images']);
+
     Widget detailPage;
-    
-    // Create the appropriate detail page based on the type
     switch (detailPageType) {
       case 0:
         detailPage = ProjectDetailsPage(
           projectTitle: project['title'],
           projectDescription: project['description'],
-          imageUrls: defaultImages,
+          imageUrls: imageUrls,
           codeSnippet: project['code'],
           githubLink: 'https://github.com/ujjawal3428/TrusirApp',
         );
@@ -114,7 +116,7 @@ class NewProjectApp extends StatelessWidget {
         detailPage = ProjectDetailsPage1(
           projectTitle: project['title'],
           projectDescription: project['description'],
-          imageUrls: defaultImages,
+          imageUrls: imageUrls,
           codeSnippet: project['code'],
           githubLink: 'https://github.com/ujjawal3428/TrusirApp',
         );
@@ -123,27 +125,23 @@ class NewProjectApp extends StatelessWidget {
         detailPage = ProjectDetailsPage2(
           projectTitle: project['title'],
           projectDescription: project['description'],
-          imageUrls: defaultImages,
+          imageUrls: imageUrls,
           codeSnippet: project['code'],
           githubLink: 'https://github.com/ujjawal3428/TrusirApp',
         );
         break;
       default:
-        // Fallback to the first detail page type if unknown
         detailPage = ProjectDetailsPage(
           projectTitle: project['title'],
           projectDescription: project['description'],
-          imageUrls: defaultImages,
+          imageUrls: imageUrls,
           codeSnippet: project['code'],
           githubLink: 'https://github.com/ujjawal3428/TrusirApp',
         );
     }
-    
-    // Use Navigator to push the detail page
+
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => detailPage,
-      ),
+      MaterialPageRoute(builder: (context) => detailPage),
     );
   }
 
@@ -161,7 +159,6 @@ class NewProjectApp extends StatelessWidget {
             "My Projects",
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 20),
           isWideScreen
               ? GridView.builder(
                   shrinkWrap: true,
@@ -210,10 +207,11 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageList = project['images'] as List<String>;
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        height: 400,
+        height: 350,
         child: Card(
           elevation: 4,
           shape: RoundedRectangleBorder(
@@ -239,9 +237,9 @@ class ProjectCard extends StatelessWidget {
                     top: Radius.circular(15),
                   ),
                   child: Image.asset(
-                    project['image'],
+                    imageList.first,
                     fit: BoxFit.cover,
-                    height: 200,
+                    height: 300,
                     width: double.infinity,
                     errorBuilder: (context, error, stackTrace) {
                       return const Center(

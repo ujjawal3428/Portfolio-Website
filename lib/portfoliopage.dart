@@ -92,7 +92,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   margin: const EdgeInsets.symmetric(vertical: 40),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.8),
+                    color: Colors.black.withValues(alpha : 0.8),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: const ContactSection(),
