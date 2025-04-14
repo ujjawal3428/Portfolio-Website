@@ -60,7 +60,10 @@ class ProjectDetailsPage1 extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text("Description", style: const TextStyle(fontSize: 23, color: Colors.white)),
-            const SizedBox(height: 8),
+            Padding(
+             padding: const EdgeInsets.only(right: 20.0, left: 20),
+              child: const SizedBox(height: 8),
+            ),
             Text(projectDescription, style: const TextStyle(fontSize: 16, color: Colors.white)),
             const SizedBox(height: 20),
             Text("Code", style: const TextStyle(fontSize: 23, color: Colors.white)),
@@ -75,12 +78,15 @@ class ProjectDetailsPage1 extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: SelectableText(
-                  codeSnippet,
-                  style: const TextStyle(
-                    fontFamily: 'Courier',
-                    fontSize: 14,
-                    color: Colors.black87,
+                child: Padding(
+                 padding: const EdgeInsets.only(right: 20.0, left: 20),
+                  child: SelectableText(
+                    codeSnippet,
+                    style: const TextStyle(
+                      fontFamily: 'Courier',
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:porfolio/projectdetailpage.dart';
 import 'package:porfolio/projectdetailpage1.dart';
 import 'package:porfolio/projectdetailpage2.dart';
@@ -9,7 +10,7 @@ class ProjectsSection extends StatelessWidget {
   final List<Map<String, dynamic>> projects = [
     {
       'title': 'Portfolio Website',
-      'description': 'This is my digital home—a sleek, responsive portfolio where I showcase the projects Im proud of (including this very site!). It’s got smooth scrolling, clean design, and a user-friendly layout that reflects my style and skills. Built with love using [your tech stack], its not just a portfolio—its a project in itself',
+      'description': 'This is my digital home—a sleek, responsive portfolio where I showcase the projects I’m proud of...',
       'images': [
         'assets/images/a1.jpg',
         'assets/images/t1.jpg',
@@ -38,11 +39,11 @@ class MyApp extends StatelessWidget {
     },
     {
       'title': 'E-commerce App',
-      'description': 'A mobile app for buying and selling products online.',
+      'description': 'An easy-to-use app to shop cosmetics and beauty products. Find everything from skincare to makeup, all in one place.',
       'images': [
-        'assets/images/t1.jpg',
-        'assets/images/ecommerce2.jpg',
-        'assets/images/ecommerce3.jpg',
+        'assets/images/a1.jpg',
+        'assets/images/a2.jpg',
+        'assets/images/a3.jpg',
       ],
       'code': '''
 import 'package:flutter/material.dart';
@@ -66,12 +67,12 @@ class EcommerceApp extends StatelessWidget {
       'detailPageType': 1,
     },
     {
-      'title': 'New Project',
-      'description': 'Description for the new project.',
+      'title': 'Trusir App',
+      'description': "Trusir's got your back — live classes, real-time doubt help, and smart courses that just click. Learn your way, the Trusir way.",
       'images': [
         'assets/images/t2.jpg',
-        'assets/images/newproj2.jpg',
-        'assets/images/newproj3.jpg',
+        'assets/images/t1.jpg',
+        'assets/images/t7.jpg',
       ],
       'code': '''
 import 'package:flutter/material.dart';
@@ -147,50 +148,49 @@ class NewProjectApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isWideScreen = screenWidth > 600;
-
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "My Projects",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          isWideScreen
-              ? GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                    childAspectRatio: 0.8,
-                  ),
-                  itemCount: projects.length,
-                  itemBuilder: (context, index) {
-                    return ProjectCard(
-                      project: projects[index],
-                      onTap: () => _navigateToProjectDetailPage(context, index),
-                    );
-                  },
-                )
-              : Column(
-                  children: List.generate(
-                    projects.length,
-                    (index) => Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: ProjectCard(
-                        project: projects[index],
-                        onTap: () => _navigateToProjectDetailPage(context, index),
-                      ),
-                    ),
-                  ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "My Projects",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
-        ],
+                const SizedBox(height: 20),
+                ScreenTypeLayout.builder(
+                  mobile: (_) => _buildGrid(context, 1),
+                  tablet: (_) => _buildGrid(context, 2),
+                  desktop: (_) => _buildGrid(context, 3),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildGrid(BuildContext context, int crossAxisCount) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: projects.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
+        childAspectRatio: 0.8,
       ),
+      itemBuilder: (context, index) {
+        return ProjectCard(
+          project: projects[index],
+          onTap: () => _navigateToProjectDetailPage(context, index),
+        );
+      },
     );
   }
 }
@@ -210,73 +210,73 @@ class ProjectCard extends StatelessWidget {
     final imageList = project['images'] as List<String>;
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        height: 350,
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              gradient: const LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 13, 45, 101),
-                  Color.fromARGB(255, 66, 4, 77),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            gradient: const LinearGradient(
+              colors: [
+                Color.fromARGB(255, 13, 45, 101),
+                Color.fromARGB(255, 66, 4, 77),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(15),
-                  ),
-                  child: Image.asset(
-                    imageList.first,
-                    fit: BoxFit.cover,
-                    height: 300,
-                    width: double.infinity,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Center(
-                        child: Icon(Icons.error, size: 50, color: Colors.white54),
-                      );
-                    },
-                  ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(15),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12, top: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        project['title'],
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        project['description'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.white70,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
+                child: Image.asset(
+                  imageList.first,
+                  fit: BoxFit.cover,
+                  height: 260,
+                  width: double.infinity,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(Icons.error, size: 50, color: Colors.white54),
+                    );
+                  },
                 ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0, right: 12, top: 22),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      project['title'],
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      project['description'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0,right: 10, bottom: 10),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -293,8 +293,8 @@ class ProjectCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
