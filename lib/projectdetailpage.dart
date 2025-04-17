@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailsPage extends StatelessWidget {
   final String projectTitle;
@@ -107,8 +108,7 @@ class ProjectDetailsPage extends StatelessWidget {
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // TODO: Add URL launcher to open githubLink
-                  // You can use: launchUrl(Uri.parse(githubLink));
+                 launchUrl(Uri.parse('https://github.com/ujjawal3428/Portfolio-Website'));
                 },
                 icon: const Icon(Icons.code),
                 label: const Text("View on GitHub"),

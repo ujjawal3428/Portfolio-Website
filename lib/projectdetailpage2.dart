@@ -18,13 +18,6 @@ class ProjectDetailsPage2 extends StatelessWidget {
     required this.githubLink,
   });
 
-  Future<void> _launchURL() async {
-    final Uri url = Uri.parse(githubLink);
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      debugPrint('Could not launch $url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +81,9 @@ class ProjectDetailsPage2 extends StatelessWidget {
             const SizedBox(height: 30),
             Center(
               child: ElevatedButton.icon(
-                onPressed: _launchURL,
+                onPressed: (){
+                  launchUrl(Uri.parse('https://github.com/ujjawal3428/TrusirApp'));
+                },
                 icon: const Icon(Icons.code),
                 label: const Text("View on GitHub"),
                 style: ElevatedButton.styleFrom(
