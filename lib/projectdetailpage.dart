@@ -45,16 +45,13 @@ class ProjectDetailsPage extends StatelessWidget {
               crossAxisSpacing: 12,
               itemCount: imageUrls.length,
               itemBuilder: (context, index) {
-                return SizedBox(height: 1000,
-                width: 250,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      imageUrls[index],
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.broken_image, size: 60),
-                    ),
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    imageUrls[index],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.broken_image, size: 60),
                   ),
                 );
               },
@@ -91,12 +88,15 @@ class ProjectDetailsPage extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: SelectableText(
-                  codeSnippet,
-                  style: const TextStyle(
-                    fontFamily: 'Courier',
-                    fontSize: 14,
-                    color: Colors.black87,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0, left: 20),
+                  child: SelectableText(
+                    codeSnippet,
+                    style: const TextStyle(
+                      fontFamily: 'Courier',
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),
@@ -108,7 +108,7 @@ class ProjectDetailsPage extends StatelessWidget {
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
-                 launchUrl(Uri.parse('https://github.com/ujjawal3428/Portfolio-Website'));
+                  launchUrl(Uri.parse('https://github.com/ujjawal3428/Portfolio-Website'));
                 },
                 icon: const Icon(Icons.code),
                 label: const Text("View on GitHub"),

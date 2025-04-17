@@ -8,35 +8,7 @@ class ProjectsSection extends StatelessWidget {
   ProjectsSection({super.key});
 
   final List<Map<String, dynamic>> projects = [
-    {
-      'title': 'Portfolio Website',
-      'description': 'This is my digital home—a sleek, responsive portfolio where I showcase the projects I’m proud of...',
-      'images': [
-        'assets/images/a1.jpg',
-        'assets/images/t1.jpg',
-        'assets/images/t2.jpg',
-      ],
-      'code': '''
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Portfolio Website')),
-        body: Center(child: Text('Welcome to my Portfolio!')),
-      ),
-    );
-  }
-}
-''',
-      'detailPageType': 0,
-    },
+   
     {
       'title': 'E-commerce App',
       'description': 'An easy-to-use app to shop cosmetics and beauty products. Find everything from skincare to makeup, all in one place.',
@@ -64,10 +36,42 @@ class EcommerceApp extends StatelessWidget {
   }
 }
 ''',
+      'detailPageType': 0,
+    },
+  
+
+     {
+      'title': 'Portfolio Website',
+      'description': 'This is my digital home—a sleek, responsive portfolio where I showcase the projects I’m proud of...',
+      'images': [
+        'assets/images/p1.png',
+        'assets/images/p2.png',
+        'assets/images/p3.png',
+      ],
+      'code': '''
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Portfolio Website')),
+        body: Center(child: Text('Welcome to my Portfolio!')),
+      ),
+    );
+  }
+}
+''',
       'detailPageType': 1,
     },
+
     {
-      'title': 'Trusir App',
+         'title': 'Trusir App',
       'description': "Trusir's got your back — live classes, real-time doubt help, and smart courses that just click. Learn your way, the Trusir way.",
       'images': [
         'assets/images/t2.jpg',
