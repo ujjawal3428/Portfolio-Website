@@ -60,36 +60,11 @@ class ProjectDetailsPage1 extends StatelessWidget {
             ),
             Text(projectDescription, style: const TextStyle(fontSize: 16, color: Colors.white)),
             const SizedBox(height: 20),
-            Text("Code", style: const TextStyle(fontSize: 23, color: Colors.white)),
-            const SizedBox(height: 8),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                 padding: const EdgeInsets.only(right: 20.0, left: 20),
-                  child: SelectableText(
-                    codeSnippet,
-                    style: const TextStyle(
-                      fontFamily: 'Courier',
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
+     
             Center(
               child: ElevatedButton.icon(
                 onPressed: (){
-                   launchUrl(Uri.parse('https://github.com/ujjawal3428/attiveg'));
+                   launchUrl(Uri.parse('https://github.com/ujjawal3428/Portfolio-Website'));
                 },
                 icon: const Icon(Icons.code),
                 label: const Text("View on GitHub"),
