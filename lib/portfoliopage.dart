@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:porfolio/aboutsection.dart';
 import 'package:porfolio/contactsection.dart';
 import 'package:porfolio/herosection.dart';
 import 'package:porfolio/projectsection.dart';
@@ -85,6 +86,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   child: ProjectsSection(),
                 ),
               ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 40,),
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient (colors : [const Color.fromARGB(167, 91, 74, 168) , const Color.fromARGB(197, 41, 147, 157)],
+                   begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                ),
+                 borderRadius: BorderRadius.circular(15),
+
+                ),
+                child: const Aboutsection()),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
