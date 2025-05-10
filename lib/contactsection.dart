@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ContactSection extends StatefulWidget {
   const ContactSection({super.key});
@@ -20,26 +19,32 @@ class _ContactSectionState extends State<ContactSection> {
     final String message = _messageController.text;
 
     if (name.isEmpty || email.isEmpty || message.isEmpty) {
-      // Show validation error
       _showDialog("Error", "Please fill in all fields.");
       return;
     }
 
+    final uri = Uri.parse('https://formsubmit.co/ujjawal.4328@gmail.com'); // Replace with your email
+
     final response = await http.post(
-      Uri.parse('https://console.firebase.google.com/project/portfolio-web-7ea80/usage/details'), // Your server URL here
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
+      uri,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: {
         'name': name,
         'email': email,
         'message': message,
-      }),
+        '_captcha': 'false', // Disable captcha (optional)
+        '_template': 'table', // Optional: email will have a table format
+      },
     );
 
     if (response.statusCode == 200) {
-      // Show success popup
       _showDialog("Success", "Message sent successfully!");
+      _nameController.clear();
+      _emailController.clear();
+      _messageController.clear();
     } else {
-      // Show failure popup
       _showDialog("Failed", "Failed to send message. Please try again.");
     }
   }
@@ -53,10 +58,8 @@ class _ContactSectionState extends State<ContactSection> {
           content: Text(message),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
             ),
           ],
         );
@@ -73,7 +76,7 @@ class _ContactSectionState extends State<ContactSection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Contact Me",
               style: TextStyle(
                 fontSize: 30,
@@ -82,35 +85,35 @@ class _ContactSectionState extends State<ContactSection> {
                 fontFamily: 'Monteserrat',
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Your Name",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Your Email",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _messageController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Type message...",
                 border: OutlineInputBorder(),
               ),
               maxLines: 5,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _sendMessage,
-              child: Text("Send Message"),
+              child: const Text("Send Message"),
             ),
           ],
         ),
