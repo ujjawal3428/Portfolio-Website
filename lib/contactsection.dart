@@ -26,7 +26,7 @@ class _ContactSectionState extends State<ContactSection> {
     }
 
     final response = await http.post(
-      Uri.parse('http://localhost:52789/send-message'), // Your server URL here
+      Uri.parse('https://console.firebase.google.com/project/portfolio-web-7ea80/usage/details'), // Your server URL here
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'name': name,
