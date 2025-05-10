@@ -8,7 +8,8 @@ class Aboutsection extends StatefulWidget {
   _AboutsectionState createState() => _AboutsectionState();
 }
 
-class _AboutsectionState extends State<Aboutsection> with SingleTickerProviderStateMixin {
+class _AboutsectionState extends State<Aboutsection>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final double spacing = 20.0;
 
@@ -33,7 +34,12 @@ class _AboutsectionState extends State<Aboutsection> with SingleTickerProviderSt
     double boxWidth = screenWidth / 4;
     double singleItemWidth = boxWidth + spacing;
 
-    final colors = [const Color.fromARGB(255, 197, 191, 191), Colors.white, const Color.fromARGB(255, 54, 235, 244), const Color.fromARGB(255, 33, 243, 103)];
+    final colors = [
+      const Color(0xFF1E1E2F), // Card background (deep bluish charcoal)
+      const Color.fromARGB(255, 170, 169, 169), // Text or surface elements (soft white)
+      const Color.fromARGB(255, 1, 100, 79), // Accent (neon mint green/cyan glow)
+      const Color.fromARGB(196, 32, 1, 103), // Secondary highlight (futuristic deep violet)
+    ];
     final titles = ["My Profile", "Skills", "Hobbies", "Education"];
     final descriptions = [
       "Name - Ujjawal Jadhav \n Contact No. - 9131538463 \n Email - ujjawal.4328@gmail.com ",
@@ -73,14 +79,16 @@ class _AboutsectionState extends State<Aboutsection> with SingleTickerProviderSt
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 30, bottom: 20.0, right: 10, left: 10),
+                            padding: const EdgeInsets.only(
+                                top: 30, bottom: 20.0, right: 10, left: 10),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   titles[index],
                                   style: TextStyle(
-                                    color: isLight ? Colors.black : Colors.white,
+                                    color:
+                                        isLight ? Colors.black : Colors.white,
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -90,7 +98,8 @@ class _AboutsectionState extends State<Aboutsection> with SingleTickerProviderSt
                                   descriptions[index],
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: isLight ? Colors.black87 : Colors.white,
+                                    color:
+                                        isLight ? Colors.black87 : Colors.white,
                                     fontSize: 16,
                                   ),
                                 ),

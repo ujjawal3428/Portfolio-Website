@@ -27,3 +27,10 @@ flutter:
 
   assets:
     - assets/images/
+
+  fonts:
+    - family: Monteserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Black.ttf
+          weight: 700

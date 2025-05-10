@@ -42,6 +42,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
             fontSize: 24,
+            
             color: Colors.white,
           ),
         ),
@@ -126,7 +127,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
         onPressed: onPressed,
         child: Text(
           label,
-          style: const TextStyle(color: Colors.white, fontSize: 16),
+
+          style: const TextStyle(color: Colors.white, fontSize: 16,
+          fontFamily: 'Montserrat'),
         ),
       ),
     );

@@ -1,55 +1,46 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 52789; // Ensure this matches the port in your Flutter code
 
-// Enable CORS
-app.use(cors());
-
-// Middleware to parse incoming JSON
+// Middleware to parse JSON body
 app.use(bodyParser.json());
 
-// POST route to handle contact form submission
-app.post('/send-message', async (req, res) => {
+// Set up Nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // You can use Gmail or another email service provider
+  auth: {
+    user: 'ujjawal.4328@gmail.com', // Replace with your email
+    pass: '4328@gmail.com',  // Replace with your email password or app-specific password
+  },
+});
+
+// Endpoint to handle form submission
+app.post('/send-message', (req, res) => {
   const { name, email, message } = req.body;
 
-  // Validate input
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: 'All fields are required' });
-  }
-
-  // Set up email transporter (use your email provider's SMTP settings)
-  const transporter = nodemailer.createTransport({
-    service: 'gmail', 
-    auth: {
-      user: 'ujjawaljadhav03082002@gmail.com',
-      pass: '451332',
-    },
-    logger: true,  // Logs the process
-    debug: true,  
-  });
-
+  // Define email options
   const mailOptions = {
-    from: email,
-    to: 'ujjawaljadhav03082002@gmail.com',
-    subject: `Contact Message from ${name}`,
-    text: message,
+    from: email,  // Sender's email (user's email)
+    to: 'ujjawal.4328@gmail.com',  // Replace with your email address to receive messages
+    subject: `Message from ${name}`,
+    text: `Message: ${message}\n\nFrom: ${name}\nEmail: ${email}`,
   };
 
-  try {
-    // Send email
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Message sent successfully!' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to send message' });
-  }
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Failed to send message' });
+    }
+    console.log('Message sent: ' + info.response);
+    return res.status(200).json({ message: 'Message sent successfully' });
+  });
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });

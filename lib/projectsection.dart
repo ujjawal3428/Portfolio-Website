@@ -117,11 +117,11 @@ class ProjectsSection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: titleSize,
                         fontWeight: FontWeight.bold,
+                         fontFamily: 'Monteserrat',
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 20),
                 ScreenTypeLayout.builder(
                   mobile: (_) => _buildGrid(context, 1),
                   tablet: (_) => _buildGrid(context, 2),
@@ -230,7 +230,6 @@ class ProjectCard extends StatelessWidget {
                         project['title'],
                         style: TextStyle(
                           fontSize: titleFontSize,
-                          fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                         maxLines: 1,

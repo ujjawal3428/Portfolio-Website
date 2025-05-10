@@ -90,9 +90,9 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 42,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                     letterSpacing: 3,
-                    fontFamily: 'RobotoMono',
+                    fontFamily: 'Monteserrat',
                     shadows: [
                       Shadow(
                         color: Colors.black54,
@@ -110,8 +110,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                 style: TextStyle(
                   color: Colors.white70,
                   fontSize: 22,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'RobotoMono',
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Monteserrat',
                   letterSpacing: 1.5,
                 ),
               ),
