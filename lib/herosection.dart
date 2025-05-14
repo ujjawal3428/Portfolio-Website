@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key,});
@@ -24,11 +26,11 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
 
     // Heading Animation
     _headingController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
     _headingOffsetAnimation = Tween<Offset>(
-      begin: const Offset(0, -0.5),
+      begin: const Offset(0, -1),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _headingController,
@@ -119,7 +121,15 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
               ScaleTransition(
                 scale: _buttonScaleAnimation,
                 child: ElevatedButton(
-  onPressed: () {
+  onPressed: () async {
+     const phoneNumber = '+919131538463';
+  final Uri whatsappUrl = Uri.parse("https://wa.me/$phoneNumber");
+
+  if (await canLaunchUrl(whatsappUrl)) {
+    await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch WhatsApp';
+  }
   },
   style: ElevatedButton.styleFrom(
     backgroundColor: const Color.fromARGB(255, 0, 140, 255),

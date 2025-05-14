@@ -111,14 +111,16 @@ class _AboutsectionState extends State<Aboutsection>
                                       ),
                                     ),
                                     const SizedBox(height: 18),
-                                    Text(
-                                      descriptions[index % descriptions.length],
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: isLight
-                                            ? Colors.black87
-                                            : Colors.white,
-                                        fontSize: 16,
+                                    Expanded(
+                                      child: Text(
+                                        descriptions[index % descriptions.length],
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: isLight
+                                              ? Colors.black87
+                                              : Colors.white,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                   ],
