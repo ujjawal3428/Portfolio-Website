@@ -91,12 +91,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 margin: EdgeInsets.symmetric(vertical: 40,),
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient (colors : [const Color.fromARGB(167, 91, 74, 168) , const Color.fromARGB(197, 41, 147, 157)],
-                   begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                ),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/bgskills.png'),
+                    fit: BoxFit.cover,
+                    opacity: 0.5,
+                    ),
                  borderRadius: BorderRadius.circular(15),
-
                 ),
                 child: const Aboutsection()),
               Padding(

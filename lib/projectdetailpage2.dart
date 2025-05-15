@@ -21,11 +21,27 @@ class ProjectDetailsPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 28, 82, 79),
-      appBar: AppBar(
-        title: Text(projectTitle),
-        backgroundColor: const Color.fromARGB(255, 20, 60, 57),
-      ),
+      backgroundColor: const Color.fromARGB(156, 139, 209, 206),
+     appBar: AppBar(
+  title: Text(
+    projectTitle,
+    style: const TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.2,
+      color: Colors.white,
+    ),
+  ),
+  centerTitle: true,
+  backgroundColor: const Color.fromARGB(75, 0, 0, 0),
+  elevation: 4, // subtle shadow
+  shadowColor: Colors.black45,
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(
+      bottom: Radius.circular(16),
+    ),
+  ),
+),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
