@@ -4,9 +4,15 @@ import 'package:porfolio/projectdetailpage.dart';
 import 'package:porfolio/projectdetailpage1.dart';
 import 'package:porfolio/projectdetailpage2.dart';
 
-class ProjectsSection extends StatelessWidget {
+class ProjectsSection extends StatefulWidget {
   ProjectsSection({super.key});
 
+  @override
+  State<ProjectsSection> createState() => _ProjectsSectionState();
+}
+
+class _ProjectsSectionState extends State<ProjectsSection> {
+  int? hoveredIndex;
   final List<Map<String, dynamic>> projects = [
     {
       'title': 'E-commerce App',
@@ -91,7 +97,27 @@ class ProjectsSection extends StatelessWidget {
     }
 
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => detailPage),
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => detailPage,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0); // Slide from bottom
+          const end = Offset.zero;
+          const curve = Curves.ease;
+
+          final tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          final opacityTween = Tween<double>(begin: 0.0, end: 1.0);
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: FadeTransition(
+              opacity: animation.drive(opacityTween),
+              child: child,
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 600),
+      ),
     );
   }
 
@@ -107,7 +133,8 @@ class ProjectsSection extends StatelessWidget {
               children: [
                 ResponsiveBuilder(
                   builder: (context, sizingInfo) {
-                    double titleSize = sizingInfo.deviceScreenType == DeviceScreenType.mobile
+                    double titleSize = sizingInfo.deviceScreenType ==
+                            DeviceScreenType.mobile
                         ? 24
                         : sizingInfo.deviceScreenType == DeviceScreenType.tablet
                             ? 28
@@ -117,7 +144,7 @@ class ProjectsSection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: titleSize,
                         fontWeight: FontWeight.bold,
-                         fontFamily: 'Monteserrat',
+                        fontFamily: 'Monteserrat',
                       ),
                     );
                   },
@@ -150,6 +177,13 @@ class ProjectsSection extends StatelessWidget {
         return ProjectCard(
           project: projects[index],
           onTap: () => _navigateToProjectDetailPage(context, index),
+          isHovered: hoveredIndex == index,
+          isDimmed: hoveredIndex != null && hoveredIndex != index,
+          onHoverChanged: (isHovering) {
+            setState(() {
+              hoveredIndex = isHovering ? index : null;
+            });
+          },
         );
       },
     );
@@ -159,11 +193,17 @@ class ProjectsSection extends StatelessWidget {
 class ProjectCard extends StatelessWidget {
   final Map<String, dynamic> project;
   final VoidCallback onTap;
+  final bool isHovered;
+  final bool isDimmed;
+  final Function(bool) onHoverChanged;
 
   const ProjectCard({
     super.key,
     required this.project,
     required this.onTap,
+    required this.isHovered,
+    required this.isDimmed,
+    required this.onHoverChanged,
   });
 
   @override
@@ -183,98 +223,110 @@ class ProjectCard extends StatelessWidget {
             ? 14
             : 16;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            gradient: const LinearGradient(
-              colors: [
-                Color.fromARGB(255, 13, 45, 101),
-                Color.fromARGB(255, 66, 4, 77),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(15),
+    double scale = isHovered ? 1.05 : (isDimmed ? 0.95 : 1.0);
+
+    return MouseRegion(
+        onEnter: (_) => onHoverChanged(true),
+        onExit: (_) => onHoverChanged(false),
+        child: AnimatedScale(
+            scale: scale,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: GestureDetector(
+              onTap: onTap,
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                child: Image.asset(
-                  imageList.first,
-                  fit: BoxFit.cover,
-                  height: 200,
-                  width: double.infinity,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
-                      child: Icon(Icons.error, size: 50, color: Colors.white54),
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 13, 45, 101),
+                        Color.fromARGB(255, 66, 4, 77),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        project['title'],
-                        style: TextStyle(
-                          fontSize: titleFontSize,
-                          color: Colors.white,
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(15),
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        child: Image.asset(
+                          imageList.first,
+                          fit: BoxFit.cover,
+                          height: 200,
+                          width: double.infinity,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Icon(Icons.error,
+                                  size: 50, color: Colors.white54),
+                            );
+                          },
+                        ),
                       ),
-                      const SizedBox(height: 10),
                       Expanded(
-                        child: Text(
-                          project['description'],
-                          style: TextStyle(
-                            fontSize: descriptionFontSize,
-                            color: Colors.white70,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                project['title'],
+                                style: TextStyle(
+                                  fontSize: titleFontSize,
+                                  color: Colors.white,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 10),
+                              Expanded(
+                                child: Text(
+                                  project['description'],
+                                  style: TextStyle(
+                                    fontSize: descriptionFontSize,
+                                    color: Colors.white70,
+                                  ),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: onTap,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.blueAccent,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            child: const FittedBox(
+                              child: Text(
+                                "View Details",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: onTap,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.blueAccent,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: const FittedBox(
-                      child: Text(
-                        "View Details",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            )));
   }
 }
