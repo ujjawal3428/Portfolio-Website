@@ -68,13 +68,9 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
       height: 500,
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-             Color.fromARGB(255, 4, 37, 94),
-                  Color.fromARGB(255, 66, 4, 77)
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        image: DecorationImage(image: AssetImage('assets/images/herobg.jpg'),
+         fit : BoxFit.cover,
+         opacity: 0.8,
         ),
       ),
       child: Center(
