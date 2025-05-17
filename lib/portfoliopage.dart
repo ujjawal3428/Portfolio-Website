@@ -70,23 +70,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
           child: Column(
             children: [
               HeroSection(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  key: _projectsKey,
-                  margin: const EdgeInsets.symmetric(vertical: 40),
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.blueAccent, Colors.purpleAccent],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: ProjectsSection(),
-                ),
-              ),
+            Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 20),
+  child: Container(
+    key: _projectsKey,
+    margin: const EdgeInsets.symmetric(vertical: 60), // Reduced from 40 to 16
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3), // Reduced from 20 to 12
+    decoration: BoxDecoration(
+      gradient: const LinearGradient(
+        colors: [Colors.blueGrey, Colors.black26],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: BorderRadius.circular(15),
+    ),
+    child: ProjectsSection(),
+  ),
+),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 40,),
                 padding: const EdgeInsets.only(top: 20, bottom: 20),

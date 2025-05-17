@@ -5,7 +5,7 @@ import 'package:porfolio/projectdetailpage1.dart';
 import 'package:porfolio/projectdetailpage2.dart';
 
 class ProjectsSection extends StatefulWidget {
-  ProjectsSection({super.key});
+  const ProjectsSection({super.key});
 
   @override
   State<ProjectsSection> createState() => _ProjectsSectionState();
@@ -13,11 +13,12 @@ class ProjectsSection extends StatefulWidget {
 
 class _ProjectsSectionState extends State<ProjectsSection> {
   int? hoveredIndex;
+
   final List<Map<String, dynamic>> projects = [
     {
       'title': 'E-commerce App',
       'description':
-          'An easy-to-use app to shop cosmetics and beauty products. Find everything from skincare to makeup, all in one place.',
+          'Discover the ultimate beauty shopping experience with our easy-to-use app, where all your favorite cosmetics and skincare products are just a tap away.',
       'images': [
         'assets/images/a1.jpg',
         'assets/images/a2.jpg',
@@ -29,7 +30,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Portfolio Website',
       'description':
-          'This is my digital home—a sleek, responsive portfolio where I showcase the projects I’m proud of...',
+          'Welcome to my digital home—a sleek, responsive portfolio designed to reflect my style and skills. Here, I showcase the projects I\'m most proud of.',
       'images': [
         'assets/images/p1.png',
         'assets/images/p2.png',
@@ -41,7 +42,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     {
       'title': 'Trusir App',
       'description':
-          "Trusir's got your back — live classes, real-time doubt help, and smart courses that just click. Learn your way, the Trusir way.",
+          'At Trusir, we\'ve got your back every step of the way. Dive into live classes, get real-time doubt support, and explore smart, easy-to-follow courses.',
       'images': [
         'assets/images/t2.jpg',
         'assets/images/t1.jpg',
@@ -100,7 +101,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => detailPage,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 1.0); // Slide from bottom
+          const begin = Offset(0.0, 1.0);
           const end = Offset.zero;
           const curve = Curves.ease;
 
@@ -127,7 +128,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       builder: (context, constraints) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -142,9 +143,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                     return Text(
                       "My Projects",
                       style: TextStyle(
+                        color: Colors.white,
                         fontSize: titleSize,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Monteserrat',
+                        fontFamily: 'Montserrat',
                       ),
                     );
                   },
@@ -163,15 +165,19 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   }
 
   Widget _buildGrid(BuildContext context, int crossAxisCount) {
+    // Adjust childAspectRatio based on screen size
+    final screenWidth = MediaQuery.of(context).size.width;
+    double childAspectRatio = screenWidth < 600 ? 0.85 : 0.9;
+    
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: projects.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.75,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: childAspectRatio, // Adjusted to reduce extra space
       ),
       itemBuilder: (context, index) {
         return ProjectCard(
@@ -224,109 +230,109 @@ class ProjectCard extends StatelessWidget {
             : 16;
 
     double scale = isHovered ? 1.05 : (isDimmed ? 0.95 : 1.0);
+    // Adjust the image height to be more proportional to the card
+    double imageHeight = screenWidth < 600 ? 160 : 200;
 
     return MouseRegion(
-        onEnter: (_) => onHoverChanged(true),
-        onExit: (_) => onHoverChanged(false),
-        child: AnimatedScale(
-            scale: scale,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: GestureDetector(
-              onTap: onTap,
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 13, 45, 101),
-                        Color.fromARGB(255, 66, 4, 77),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(15),
-                        ),
-                        child: Image.asset(
-                          imageList.first,
-                          fit: BoxFit.cover,
-                          height: 200,
-                          width: double.infinity,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Center(
-                              child: Icon(Icons.error,
-                                  size: 50, color: Colors.white54),
-                            );
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                project['title'],
-                                style: TextStyle(
-                                  fontSize: titleFontSize,
-                                  color: Colors.white,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 10),
-                              Expanded(
-                                child: Text(
-                                  project['description'],
-                                  style: TextStyle(
-                                    fontSize: descriptionFontSize,
-                                    color: Colors.white70,
-                                  ),
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: onTap,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.blueAccent,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                            ),
-                            child: const FittedBox(
-                              child: Text(
-                                "View Details",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+      onEnter: (_) => onHoverChanged(true),
+      onExit: (_) => onHoverChanged(false),
+      child: AnimatedScale(
+        scale: scale,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            clipBehavior: Clip.antiAlias,
+            margin: EdgeInsets.zero, // Remove default card margin
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF0D2D65),
+                    Color(0xFF42044D),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
-            )));
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    imageList.first,
+                    height: imageHeight,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return SizedBox(
+                        height: imageHeight,
+                        child: const Center(
+                          child: Icon(Icons.broken_image,
+                              size: 50, color: Colors.white54),
+                        ),
+                      );
+                    },
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Text(
+                            project['title'],
+                            style: TextStyle(
+                              fontSize: titleFontSize,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            project['description'],
+                            style: TextStyle(
+                              fontSize: descriptionFontSize,
+                              color: Colors.white70,
+                            ),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const Spacer(), // Push the button to the bottom
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: onTap,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blueAccent,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                              ),
+                              child: const FittedBox(
+                                child: Text(
+                                  "View Details",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
