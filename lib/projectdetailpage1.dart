@@ -22,7 +22,7 @@ class ProjectDetailsPage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: const Color.fromARGB(156, 139, 209, 206),
+     backgroundColor: const Color.fromARGB(156, 38, 41, 40),
      appBar: AppBar(
   title: Text(
     projectTitle,
