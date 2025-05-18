@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:porfolio/aboutsection.dart';
+// import 'package:porfolio/aboutsection.dart';
 import 'package:porfolio/contactsection.dart';
+import 'package:porfolio/experience.dart';
+// import 'package:porfolio/experience.dart';
 import 'package:porfolio/herosection.dart';
 import 'package:porfolio/projectsection.dart';
 
@@ -99,6 +102,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: const Aboutsection()),
+                 Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 20),
+  child: Container(
+    margin: const EdgeInsets.symmetric(vertical: 60), // Reduced from 40 to 16
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3), // Reduced from 20 to 12
+    decoration: BoxDecoration(
+      gradient: const LinearGradient(
+        colors: [Colors.blueGrey, Colors.black26],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: BorderRadius.circular(15),
+    ),
+    child: ExperienceSection(),
+  ),
+),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
