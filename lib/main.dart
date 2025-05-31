@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
         primarySwatch: Colors.blue,
       ),
-      home: PortfolioPage(),
+      home: PortfolioPage(organizationName: '', razorpayKey: '',),
     );
   }
 }

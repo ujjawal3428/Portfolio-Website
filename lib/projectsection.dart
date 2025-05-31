@@ -126,9 +126,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 768;
+        
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              top: 16.0,
+              bottom: isMobile ? 32.0 : 16.0, // Extra bottom padding for mobile
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -140,13 +147,18 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                         : sizingInfo.deviceScreenType == DeviceScreenType.tablet
                             ? 28
                             : 32;
-                    return Text(
-                      "My Projects",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: titleSize,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: isMobile ? 20 : 16,
+                      ),
+                      child: Text(
+                        "My Projects",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                     );
                   },
@@ -165,9 +177,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   }
 
   Widget _buildGrid(BuildContext context, int crossAxisCount) {
-    // Adjust childAspectRatio based on screen size
     final screenWidth = MediaQuery.of(context).size.width;
-    double childAspectRatio = screenWidth < 600 ? 0.85 : 0.9;
+    final isMobile = screenWidth < 768;
+    
+    // Improved aspect ratio calculation for mobile
+    double childAspectRatio;
+    if (isMobile) {
+      childAspectRatio = screenWidth < 400 ? 0.75 : 0.8;
+    } else {
+      childAspectRatio = screenWidth < 600 ? 0.85 : 0.9;
+    }
     
     return GridView.builder(
       shrinkWrap: true,
@@ -175,9 +194,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       itemCount: projects.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: childAspectRatio, // Adjusted to reduce extra space
+        mainAxisSpacing: isMobile ? 16 : 10, // More spacing on mobile
+        crossAxisSpacing: isMobile ? 12 : 10,
+        childAspectRatio: childAspectRatio,
       ),
       itemBuilder: (context, index) {
         return ProjectCard(
@@ -190,6 +209,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               hoveredIndex = isHovering ? index : null;
             });
           },
+          isMobile: isMobile,
         );
       },
     );
@@ -202,6 +222,7 @@ class ProjectCard extends StatelessWidget {
   final bool isHovered;
   final bool isDimmed;
   final Function(bool) onHoverChanged;
+  final bool isMobile;
 
   const ProjectCard({
     super.key,
@@ -210,6 +231,7 @@ class ProjectCard extends StatelessWidget {
     required this.isHovered,
     required this.isDimmed,
     required this.onHoverChanged,
+    this.isMobile = false,
   });
 
   @override
@@ -230,8 +252,14 @@ class ProjectCard extends StatelessWidget {
             : 16;
 
     double scale = isHovered ? 1.05 : (isDimmed ? 0.95 : 1.0);
-    // Adjust the image height to be more proportional to the card
-    double imageHeight = screenWidth < 600 ? 160 : 200;
+    
+    // Better image height calculation for mobile
+    double imageHeight;
+    if (isMobile) {
+      imageHeight = screenWidth < 400 ? 140 : 160;
+    } else {
+      imageHeight = screenWidth < 600 ? 160 : 200;
+    }
 
     return MouseRegion(
       onEnter: (_) => onHoverChanged(true),
@@ -248,7 +276,7 @@ class ProjectCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.zero, // Remove default card margin
+            margin: EdgeInsets.zero,
             child: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -280,11 +308,16 @@ class ProjectCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: EdgeInsets.only(
+                        left: 12.0,
+                        right: 12.0,
+                        top: 12.0,
+                        bottom: isMobile ? 16.0 : 12.0, // Extra bottom padding for mobile
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 10,),
+                          SizedBox(height: isMobile ? 8 : 10),
                           Text(
                             project['title'],
                             style: TextStyle(
@@ -295,17 +328,20 @@ class ProjectCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 15),
-                          Text(
-                            project['description'],
-                            style: TextStyle(
-                              fontSize: descriptionFontSize,
-                              color: Colors.white70,
+                          SizedBox(height: isMobile ? 12 : 15),
+                          Expanded(
+                            child: Text(
+                              project['description'],
+                              style: TextStyle(
+                                fontSize: descriptionFontSize,
+                                color: Colors.white70,
+                                height: 1.4, // Better line height for readability
+                              ),
+                              maxLines: isMobile ? 3 : 4,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
                           ),
-                          const Spacer(), // Push the button to the bottom
+                          SizedBox(height: isMobile ? 12 : 8),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -313,12 +349,20 @@ class ProjectCard extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.blueAccent,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: isMobile ? 14 : 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
-                              child: const FittedBox(
+                              child: FittedBox(
                                 child: Text(
                                   "View Details",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: isMobile ? 14 : 13,
+                                  ),
                                 ),
                               ),
                             ),
