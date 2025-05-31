@@ -74,9 +74,9 @@ class _AboutsectionState extends State<Aboutsection>
     final titles = ["My Profile", "Skills", "Hobbies", "Education"];
     
     final descriptions = [
-      "Name - Ujjawal Jadhav \nContact No. - 9131538463 \nEmail - ujjawal.4328@gmail.com",
-      "Dart \nFlutter \nFirebase \nAPI Integration",
-      "Chess \nCoding \nCricket \nCycling",
+      "Name - Ujjawal Jadhav \nContact No. - 9131538463 \nEmail - ujjawal.4328@gmail.com \nLocation - Bhilai, CG",
+      "Dart \nFlutter \nFirebase \nAPI Integration \nGitHub \nJavaScript",
+      "Chess \nCoding \nCricket \nMovies \nReading Books \n Travelling",
       "B.Tech \n(Computer Science & Engineering) \nRCET, Bhilai(C.G) \n[2021-2025]"
     ];
 
@@ -138,33 +138,35 @@ class _AboutsectionState extends State<Aboutsection>
                                 vertical: screenWidth < 600 ? 16.0 : 20.0,
                                 horizontal: screenWidth < 600 ? 12.0 : 16.0,
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    titles[index % titles.length],
-                                    style: TextStyle(
-                                      color: isLight ? Colors.black : Colors.white,
-                                      fontSize: _getResponsiveFontSize(screenWidth, 23),
-                                      fontWeight: FontWeight.bold,
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      titles[index % titles.length],
+                                      style: TextStyle(
+                                        color: isLight ? Colors.black : Colors.white,
+                                        fontSize: _getResponsiveFontSize(screenWidth, 23),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: screenWidth < 600 ? 12 : 16),
-                                  Expanded(
-                                    child: SingleChildScrollView(
-                                      child: Text(
-                                        descriptions[index % descriptions.length],
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: isLight ? Colors.black87 : Colors.white,
-                                          fontSize: _getResponsiveFontSize(screenWidth, 18),
-                                          height: 1.4, // Line height for better readability
+                                    SizedBox(height: screenWidth < 600 ? 12 : 16),
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        child: Text(
+                                          descriptions[index % descriptions.length],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: isLight ? Colors.black87 : Colors.white,
+                                            fontSize: _getResponsiveFontSize(screenWidth, 18),
+                                            height: 1.4, // Line height for better readability
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
