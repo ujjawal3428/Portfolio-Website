@@ -103,7 +103,7 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
               ),
               const SizedBox(height: 15),
               const Text(
-                "Front-end App Developer",
+                "Flutter App Developer",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white70,

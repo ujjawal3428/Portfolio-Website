@@ -247,7 +247,7 @@ class ProjectDetailsPage1 extends StatelessWidget {
                 ),
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    final uri = Uri.parse('https://github.com/ujjawal3428/Portfolio-Website');
+                    final uri = Uri.parse('https://github.com/ujjawal3428/StyleSuggest');
                     if (await canLaunchUrl(uri)) {
                       await launchUrl(uri);
                     } else {

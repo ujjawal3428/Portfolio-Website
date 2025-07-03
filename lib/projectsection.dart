@@ -28,13 +28,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       'detailPageType': 0,
     },
     {
-      'title': 'Portfolio Website',
+      'title': 'Style Suggest',
       'description':
-          'Welcome to my digital home—a sleek, responsive portfolio designed to reflect my style and skills. Here, I showcase the projects I\'m most proud of.',
+          'StyleSuggest is an intelligent fashion assistant that helps you discover clothing colors and outfit suggestions that suit your unique skin tone. Powered by AI, the app analyzes your facial image to detect your skin tone and recommends personalized colors and styles — making sure you wear what truly complements you.',
       'images': [
-        'assets/images/p1.png',
-        'assets/images/p2.png',
-        'assets/images/p3.png',
+        'assets/images/s1.jpg',
+        'assets/images/s2.jpg',
+        'assets/images/s3.jpg',
       ],
       'code': '''// Sample code...''',
       'detailPageType': 1,
@@ -75,7 +75,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           projectDescription: project['description'],
           imageUrls: imageUrls,
           codeSnippet: project['code'],
-          githubLink: 'https://github.com/ujjawal3428/Portfolio-Website',
+          githubLink: 'https://github.com/ujjawal3428/StyleSuggest',
         );
         break;
       case 2:
