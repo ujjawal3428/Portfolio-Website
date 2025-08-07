@@ -534,7 +534,7 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFF4facfe).withOpacity(0.6),
+                        color: const Color.fromARGB(255, 14, 36, 54).withOpacity(0.6),
                         width: 3,
                       ),
                       boxShadow: [
@@ -655,8 +655,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                               child: ShaderMask(
                                 shaderCallback: (bounds) => LinearGradient(
                                   colors: [
-                                    const Color(0xFF4facfe),
-                                    const Color(0xFF667eea),
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                    const Color.fromARGB(255, 255, 255, 255),
                                   ],
                                 ).createShader(bounds),
                                 child: const Text(
