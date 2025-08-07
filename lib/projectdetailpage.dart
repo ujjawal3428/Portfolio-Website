@@ -75,7 +75,7 @@ class ProjectDetailsPage extends StatelessWidget {
           children: [
             // Project Images Section
             Card(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha : 0.3),
               elevation: 8,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -122,7 +122,7 @@ class ProjectDetailsPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
+                                      color: Colors.black.withValues(alpha : 0.3),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -182,7 +182,7 @@ class ProjectDetailsPage extends StatelessWidget {
 
             // Description Section
             Card(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha : 0.3),
               elevation: 8,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -239,7 +239,7 @@ class ProjectDetailsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha : 0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -251,6 +251,7 @@ class ProjectDetailsPage extends StatelessWidget {
                     if (await canLaunchUrl(uri)) {
                       await launchUrl(uri);
                     } else {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Could not launch GitHub link'),
